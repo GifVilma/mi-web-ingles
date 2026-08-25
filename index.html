@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idiomaspark Kids - Aprende Inglés Fácil</title>
+    <!-- Fuentes amigables desde Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Estilos de la aplicación -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app">
+        <!-- BARRA LATERAL (SIDEBAR) -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <span class="logo-emoji">🇬🇧</span>
+                <div class="logo-nombre">EnglishSpark</div>
+                <div class="logo-sub">3º ESO y Primaria</div>
+            </div>
+
+            <nav class="nav">
+                <span class="nav-grupo">Navegación</span>
+                <button class="nav-btn activo" id="btn-inicio" onclick="irAPantalla('inicio')">
+                    <span class="nav-emoji">📚</span> Inicio
+                </button>
+                
+                <span class="nav-grupo">Elige tu Lección</span>
+                <!-- Desplegable elegante para seleccionar la lección activa -->
+                <div class="selector-leccion-container">
+                    <select id="selector-lecciones" class="selector-lecciones" onchange="seleccionarLeccionDesdeDesplegable(this.value)">
+                        <option value="" disabled selected> Selecciona un tema...</option>
+                        <option value="leccion1">Lección 1: Verbo To Be </option>
+                        <option value="leccion2">Lección 2: Personal Pronouns </option>
+                        <option value="leccion3">Lección 3: Present Simple </option>
+                        <option value="leccion4">Lección 4: Past Simple </option>
+                        <option value="leccion5">Lección 5: Future (Will/Going to) </option>
+                        <option value="leccion6">Lección 6: Modal Verbs </option>
+                        <option value="leccion7">Lección 7: Present Perfect Simple </option>
+                        <option value="leccion8">Lección 8: Past Continuous </option>
+                    </select>
+                </div>
+
+                <button class="nav-btn disabled" id="btn-leccion-activa" onclick="irAPantalla('leccion')" disabled>
+                    <span class="nav-emoji">📖</span> Lección Activa
+                </button>
+
+                <span class="nav-grupo">Práctica</span>
+                <button class="nav-btn" id="btn-errores" onclick="irAPantalla('errores')">
+                    Mis Errores <span class="error-badge" id="contador-errores">0</span>
+                </button>
+            </nav>
+
+            <!-- Racha de estudio en el pie de la barra lateral -->
+            <div class="sidebar-pie">
+                <div class="racha-mini">
+                    <span class="racha-num" id="racha-valor">1</span>
+                    <div class="racha-info">
+                        <strong>Días de Racha</strong><br>
+                        ¡No te detengas! 🔥
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL (MAIN) -->
+        <main class="main">
+            
+            <!-- PANTALLA 1: INICIO (DASHBOARD) -->
+            <section class="pantalla activa" id="pantalla-inicio">
+                <div class="bienvenida-hero">
+                    <div class="hero-saludo">¡Hola de nuevo! 👋</div>
+                    <h1 class="hero-titulo">¿Qué vas a aprender hoy?</h1>
+                    <p class="hero-sub">Domina el inglés paso a paso con explicaciones sencillas, pronunciación real y prácticas interactivas creadas para aprobar tus exámenes.</p>
+                </div>
+
+                <!-- Progreso general del alumno -->
+                <div class="progreso-wrap">
+                    <h3 class="prog-titulo">Tu Progreso de Estudio</h3>
+                    <div class="prog-nivel-fila">
+                        <span class="prog-nivel-nombre" id="nivel-nombre">Nivel 1 - Principiante 🌟</span>
+                        <span class="prog-xp" id="xp-texto">150 / 500 XP</span>
+                    </div>
+                    <div class="prog-barra">
+                        <div class="prog-fill" id="xp-barra" style="width: 30%;"></div>
+                    </div>
+                    <div class="prog-etapas">
+                        <span>Inicio 🏁</span>
+                        <span>Intermedio 🏆</span>
+                        <span>Experto 👑</span>
+                    </div>
+                </div>
+
+                <!-- Cuadrícula de Lecciones Disponibles -->
+                <h3 class="seccion-etiqueta">Tus Lecciones de Estudio</h3>
+                <div class="leccion-grid" id="contenedor-leccion-cards">
+                    <!-- Tarjetas de lecciones (se generan dinámicamente con app.js) -->
+                </div>
+            </section>
+
+            <!-- PANTALLA 2: LECCIÓN DINÁMICA (CON PESTAÑAS) -->
+            <section class="pantalla" id="pantalla-leccion">
+                <!-- Cabecera de la Lección Activa -->
+                <div class="leccion-cabecera" id="leccion-cabecera-dinamica">
+                    <span class="leccion-tag" id="leccion-tag-dinamico">Lección Activa</span>
+                    <h1 class="leccion-h1" id="leccion-titulo-dinamico">Cargando Lección...</h1>
+                    <p class="leccion-desc-hero" id="leccion-desc-dinamica">Cargando la descripción de la lección activa de forma dinámica.</p>
+                </div>
+
+                <!-- Navegación de pestañas internas (Teoría, Ejercicios, Conversación) -->
+                <div class="tabs-leccion">
+                    <button class="tab-btn activo" onclick="cambiarTab('teoria')">📚 Teoría</button>
+                    <button class="tab-btn" onclick="cambiarTab('ejercicios')">✏️ Ejercicios</button>
+                    <button class="tab-btn" onclick="cambiarTab('conversacion')">💬 Conversación</button>
+                </div>
+
+                <!-- Contenido de las pestañas -->
+                <div class="tab-contenido-wrap">
+                    <!-- Pestaña: Teoría -->
+                    <div class="tab-pane activo" id="tab-teoria">
+                        <!-- Aquí se inyecta la teoría dinámicamente -->
+                    </div>
+
+                    <!-- Pestaña: Ejercicios -->
+                    <div class="tab-pane" id="tab-ejercicios">
+                        <div class="ejercicios-intro-header">
+                            <span class="ejercicio-numero">✍</span>
+                            <span class="ejercicio-instruccion">Práctica Interactiva</span>
+                            <h2 class="ejercicio-pregunta">Pon a prueba tu aprendizaje</h2>
+                        </div>
+                        <div id="contenedor-ejercicios-dinamicos">
+                            <!-- Aquí se inyectan los ejercicios dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Pestaña: Conversación -->
+                    <div class="tab-pane" id="tab-conversacion">
+                        <div class="escena-card">
+                            <span class="escena-tag" id="conversacion-escena-tag">Roleplay Dinámico</span>
+                            <h2 class="escena-titulo" id="conversacion-escena-titulo">Charla interactiva</h2>
+                            <p class="escena-instruccion" id="conversacion-escena-instruccion">Responde usando la estructura que has aprendido en esta lección.</p>
+                        </div>
+                        
+                        <div class="dialogo" id="hilo-conversacion">
+                            <!-- Aquí se inyectan los mensajes de conversación dinámicamente -->
+                        </div>
+
+                        <!-- Panel de respuesta para chatear -->
+                        <div class="zona-respuesta-conv">
+                            <textarea id="texto-respuesta-conversacion" placeholder="Escribe tu respuesta en inglés aquí..." rows="2"></textarea>
+                            <div class="fila-zona">
+                                <span class="pista-conv" id="conversacion-pista">Pista: Puedes usar las estructuras estudiadas para responder.</span>
+                                <button class="btn btn-principal btn-sm" onclick="enviarMensajeConversacion()">Enviar Mensaje 🚀</button>
+                            </div>
+                        </div>
+
+                        <!-- Panel de análisis dinámico tras terminar el diálogo -->
+                        <div class="panel-analisis" id="panel-analisis-conversacion">
+                            <h4 class="analisis-titulo">Corrección y Consejos de la IA 💡</h4>
+                            <p class="analisis-texto" id="texto-analisis-conversacion">Excelente respuesta. Tu estructura es correcta y has aplicado el tema correspondiente.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 3: HISTORIAL DE ERRORES -->
+            <section class="pantalla" id="pantalla-errores">
+                <div class="leccion-cabecera" style="background: #e76f51;">
+                    <span class="leccion-tag">Revisión Personalizada</span>
+                    <h1 class="leccion-h1">Tu Registro de Errores</h1>
+                    <p class="leccion-desc-hero">Repasa las preguntas que has fallado en los ejercicios interactivos. Cuantas más veces falles una pregunta, más alta será su prioridad para repasar.</p>
+                </div>
+
+                <div class="alerta-revision">
+                    💡 <strong>Consejo de estudio:</strong> El error es el mejor maestro. Repasa estas tarjetas de errores antes de tus exámenes oficiales del instituto.
+                </div>
+
+                <div id="contenedor-errores" class="lista-errores">
+                    <!-- Se inyecta dinámicamente si hay errores guardados -->
+                    <div class="no-errores-mensaje">
+                        🎉 ¡Excelente! No tienes errores registrados actualmente. Sigue practicando.
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- SISTEMAS DE RECOMPENSAS (TOAST Y XP POPUP) -->
+    <!-- Notificación flotante rápida (Toast) -->
+    <div class="toast" id="toast-notificacion">¡Excelente trabajo! +10 XP</div>
+
+    <!-- Pantalla gigante de celebración de puntos XP -->
+    <div class="xp-pop" id="popup-celebracion-xp">
+        <div class="xp-num" id="popup-xp-cantidad">+50 XP</div>
+        <div class="xp-msg">¡Increíble! Lección completada con éxito 🎉</div>
+        <button class="btn btn-principal btn-sm" style="margin-top: 16px;" onclick="cerrarPopupXP()">¡Genial! 🚀</button>
+    </div>
+
+    <!-- CARGA DE ARCHIVOS DE LECCIONES -->
+    <!-- Se cargan como scripts que guardan sus objetos en window.Lecciones -->
+    <script src="js/lecciones/leccion1.js"></script>
+    <script src="js/lecciones/leccion2.js"></script>
+    <script src="js/lecciones/leccion3.js"></script>
+    <script src="js/lecciones/leccion4.js"></script>
+    <script src="js/lecciones/leccion5.js"></script>
+    <script src="js/lecciones/leccion6.js"></script>
+    <script src="js/lecciones/leccion7.js"></script>
+    <script src="js/lecciones/leccion8.js"></script>
+
+    
+    <!-- MOTOR PRINCIPAL -->
+    <script src="app.js"></script>
+</body>
+</html>
