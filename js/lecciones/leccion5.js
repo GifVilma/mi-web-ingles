@@ -15,14 +15,14 @@ window.Lecciones.leccion5 = {
     // --- CONTENIDO DE TEORÍA EN HTML ---
     teoria: `
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>⏳</span> El Futuro en Inglés</h3>
+            <h3 class="bloque-titulo"> El Futuro en Inglés</h3>
             <p class="bloque-texto">
                 En inglés, a diferencia del español, existen dos formas muy comunes de expresar el futuro: <strong>Will</strong> y <strong>Be Going To</strong>. Aunque ambas se traducen parecido, se usan en situaciones totalmente distintas.
             </p>
         </div>
 
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>💭</span> 1. Future con "WILL" (Decisiones rápidas)</h3>
+            <h3 class="bloque-titulo">< 1. Future con "WILL" (Decisiones rápidas)</h3>
             <p class="bloque-texto">
                 Usamos <strong>Will</strong> (y su forma negativa <strong>won't</strong>) para:<br>
                 1. <strong>Decisiones espontáneas:</strong> Decisiones que tomas en el mismo instante en el que hablas.<br>
@@ -44,7 +44,7 @@ window.Lecciones.leccion5 = {
         </div>
 
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>📅</span> 2. Future con "BE GOING TO" (Planes pensados)</h3>
+            <h3 class="bloque-titulo"> 2. Future con "BE GOING TO" (Planes pensados)</h3>
             <p class="bloque-texto">
                 Usamos <strong>Be Going To</strong> (sujeto + am/is/are + going to + verbo) para:<br>
                 1. <strong>Planes e intenciones:</strong> Cosas que ya habías decidido y organizado **antes** de hablar.<br>

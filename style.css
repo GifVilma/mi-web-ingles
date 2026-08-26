@@ -1,9 +1,13 @@
 /* ==========================================================================
    HOJA DE ESTILOS UNIFICADA (style.css)
-   Inspirada en el diseño alegre, redondo y naranja de "primero-ingles.html"
+   Inspirada en el diseÃ±o alegre, redondo y naranja de "primero-ingles.html"
    ========================================================================== */
+   @charset "UTF-8";
+   :root {
+    --morado: #e06a55;
+    --morado-bg: #fff8f6;
+    --morado-borde: #ffdfd5;
 
-:root {
     --naranja: #ff7a45;
     --naranja2: #e05e2b;
     --naranja-bg: #fff2ec;
@@ -21,9 +25,9 @@
     --verde-bg: #ecfdf5;
     --verde-borde: #a7f3d0;
     
-    --rojo: #ef4444;
-    --rojo-bg: #fef2f2;
-    --rojo-borde: #fca5a5;
+    --rojo: #b8432f;
+    --rojo-bg: #fff8f6;
+    --rojo-borde: #ffdfd5;
     
     --bg: #f8fafc;
     --bg2: #ffffff;
@@ -58,13 +62,13 @@ body {
     overflow-x: hidden;
 }
 
-/* ── LAYOUT ── */
+/* â”€â”€ LAYOUT â”€â”€ */
 .app {
     display: flex;
     min-height: 100vh;
 }
 
-/* ── SIDEBAR (BARRA LATERAL) ── */
+/* â”€â”€ SIDEBAR (BARRA LATERAL) â”€â”€ */
 .sidebar {
     width: 250px;
     flex-shrink: 0;
@@ -164,6 +168,7 @@ body {
 
 .nav-emoji {
     font-size: 16px;
+    opacity: 0.8;
     width: 22px;
     text-align: center;
 }
@@ -241,7 +246,7 @@ body {
     line-height: 1.4;
 }
 
-/* ── MAIN (CONTENIDO) ── */
+/* â”€â”€ MAIN (CONTENIDO) â”€â”€ */
 .main {
     flex: 1;
     overflow-y: auto;
@@ -260,7 +265,7 @@ body {
     display: block;
 }
 
-/* ── BIENVENIDA HERO ── */
+/* â”€â”€ BIENVENIDA HERO â”€â”€ */
 .bienvenida-hero {
     background: var(--naranja);
     border-radius: var(--r3);
@@ -273,13 +278,13 @@ body {
 }
 
 .bienvenida-hero::after {
-    content: '🌟';
+    content: 'ðŸŒŸ';
     position: absolute;
     right: 36px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 84px;
-    opacity: 0.18;
+    opacity: 0.06;
     animation: rotarEstrella 6s linear infinite;
 }
 
@@ -307,7 +312,7 @@ body {
     line-height: 1.6;
 }
 
-/* ── PROGRESO GENERAL ── */
+/* â”€â”€ PROGRESO GENERAL â”€â”€ */
 .progreso-wrap {
     background: var(--bg2);
     border: 1.5px solid var(--borde);
@@ -368,7 +373,7 @@ body {
     font-weight: 700;
 }
 
-/* ── LECCIONES GRID (DASHBOARD) ── */
+/* â”€â”€ LECCIONES GRID (DASHBOARD) â”€â”€ */
 .seccion-etiqueta {
     font-size: 12px;
     letter-spacing: 2px;
@@ -429,8 +434,9 @@ body {
 }
 
 .leccion-emoji {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 8px;
+    opacity: 0.85;
     display: block;
 }
 
@@ -466,7 +472,7 @@ body {
     color: var(--text3);
 }
 
-/* ── LECCIÓN CON PESTAÑAS (TABS) ── */
+/* â”€â”€ LECCIÃ“N CON PESTAÃ‘AS (TABS) â”€â”€ */
 .leccion-cabecera {
     background: var(--naranja);
     border-radius: var(--r3);
@@ -479,13 +485,13 @@ body {
 }
 
 .leccion-cabecera::after {
-    content: '📚';
+    content: 'ðŸ“š';
     position: absolute;
     right: 32px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 72px;
-    opacity: 0.15;
+    opacity: 0.05;
 }
 
 .leccion-tag {
@@ -556,7 +562,7 @@ body {
     display: block;
 }
 
-/* ── BLOQUE EXPLICACIÓN TEÓRICA ── */
+/* â”€â”€ BLOQUE EXPLICACIÃ“N TEÃ“RICA â”€â”€ */
 .bloque-explicacion {
     background: var(--bg2);
     border: 2px solid var(--borde);
@@ -564,6 +570,13 @@ body {
     padding: 30px 34px;
     margin-bottom: 24px;
     box-shadow: var(--sombra);
+}
+
+.bloque-titulo span {
+    opacity: 0.85;
+    display: inline-block;
+    transform: scale(0.95);
+    margin-right: 4px;
 }
 
 .bloque-titulo {
@@ -588,7 +601,7 @@ body {
     font-weight: 800;
 }
 
-/* TABLA DINÁMICA DE GRAMÁTICA */
+/* TABLA DINÃMICA DE GRAMÃTICA */
 .tabla-tobe {
     width: 100%;
     border-collapse: separate;
@@ -636,7 +649,7 @@ body {
     font-size: 13px;
 }
 
-/* TARJETAS DE EJEMPLO CON PRONUNCIACIÓN */
+/* TARJETAS DE EJEMPLO CON PRONUNCIACIÃ“N */
 .ejemplos-grid {
     display: flex;
     flex-direction: column;
@@ -672,7 +685,7 @@ body {
 }
 
 .ejemplo-es::before {
-    content: '→ ';
+    content: '\2192  ';
     color: var(--text3);
     font-weight: bold;
 }
@@ -691,17 +704,23 @@ body {
 
 /* TARJETAS ESPECIALES DE NEGATIVO Y PREGUNTA */
 .negacion-card {
-    background: var(--rojo-bg);
-    border: 2px solid var(--rojo-borde);
+    background: var(--morado-bg);
+    border: 2px solid var(--morado-borde);
     border-radius: var(--r2);
     padding: 22px 26px;
     margin-bottom: 14px;
 }
 
+.negacion-titulo span {
+    filter: hue-rotate(260deg) saturate(1.2); /* Convierte el emoji rojo âŒ en un morado amigable */
+    opacity: 0.9;
+    display: inline-block;
+}
+
 .negacion-titulo {
     font-family: 'Fredoka One', cursive;
     font-size: 18px;
-    color: var(--rojo);
+    color: var(--morado);
     margin-bottom: 10px;
     display: flex;
     align-items: center;
@@ -746,7 +765,7 @@ body {
     flex-shrink: 0;
 }
 
-/* ── EJERCICIOS INTERACTIVOS ── */
+/* â”€â”€ EJERCICIOS INTERACTIVOS â”€â”€ */
 .ejercicios-intro-header {
     margin-bottom: 20px;
 }
@@ -976,7 +995,7 @@ body {
     font-style: italic;
 }
 
-/* ── CONVERSACIÓN (CHAT INTERACTIVO) ── */
+/* â”€â”€ CONVERSACIÃ“N (CHAT INTERACTIVO) â”€â”€ */
 .escena-card {
     background: var(--naranja);
     border-radius: var(--r3);
@@ -989,13 +1008,13 @@ body {
 }
 
 .escena-card::after {
-    content: '💬';
+    content: 'ðŸ’¬';
     position: absolute;
     right: 24px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 56px;
-    opacity: 0.15;
+    opacity: 0.05;
 }
 
 .escena-tag {
@@ -1192,7 +1211,7 @@ body {
     line-height: 1.8;
 }
 
-/* ── BOTONES GLOBALES ── */
+/* â”€â”€ BOTONES GLOBALES â”€â”€ */
 .btn {
     padding: 11px 24px;
     border-radius: var(--r);
@@ -1250,7 +1269,7 @@ body {
     font-size: 16px;
 }
 
-/* ── HISTORIAL DE ERRORES ── */
+/* â”€â”€ HISTORIAL DE ERRORES â”€â”€ */
 .alerta-revision {
     background: var(--amarillo-bg);
     border: 1.5px solid var(--amarillo-borde);
@@ -1328,7 +1347,7 @@ body {
     font-size: 15px;
 }
 
-/* ── RECOMPENSAS: TOAST Y XP ── */
+/* â”€â”€ RECOMPENSAS: TOAST Y XP â”€â”€ */
 .toast {
     position: fixed;
     bottom: 24px;
@@ -1395,7 +1414,7 @@ body {
     font-weight: 800;
 }
 
-/* ── ANIMACIONES ── */
+/* â”€â”€ ANIMACIONES â”€â”€ */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
@@ -1439,7 +1458,7 @@ body {
     background: var(--naranja-borde);
 }
 
-/* ── DISPOSITIVOS MÓVILES (RESPONSIVE) ── */
+/* â”€â”€ DISPOSITIVOS MÃ“VILES (RESPONSIVE) â”€â”€ */
 @media (max-width: 768px) {
     .app {
         flex-direction: column;

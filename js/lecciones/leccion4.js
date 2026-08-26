@@ -15,14 +15,14 @@ window.Lecciones.leccion4 = {
     // --- CONTENIDO DE TEORÍA EN HTML ---
     teoria: `
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>📜</span> ¿Cuándo usamos el Past Simple?</h3>
+            <h3 class="bloque-titulo"> ¿Cuándo usamos el Past Simple?</h3>
             <p class="bloque-texto">
                 Usamos el <strong>Past Simple</strong> para hablar de acciones que <strong>empezaron y terminaron en el pasado</strong>. Suele ir acompañado de palabras temporales como <em>yesterday</em> (ayer), <em>last week</em> (la semana pasada) o <em>ago</em> (hace...).
             </p>
         </div>
 
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>⚡</span> Verbos Regulares vs. Irregulares</h3>
+            <h3 class="bloque-titulo"> Verbos Regulares vs. Irregulares</h3>
             <p class="bloque-texto">
                 En oraciones afirmativas en pasado, los verbos se dividen en dos grupos:
             </p>
@@ -52,22 +52,22 @@ window.Lecciones.leccion4 = {
         </div>
 
         <div class="negacion-card">
-            <h3 class="negacion-titulo"><span>❌</span> La Forma Negativa en Pasado</h3>
+            <h3 class="negacion-titulo"> La Forma Negativa en Pasado</h3>
             <p class="bloque-texto" style="color:var(--text2);">
                 ¡Buenas noticias! Para negar en pasado solo hay un único auxiliar para todos los sujetos: <strong>didn't</strong> (did not). <br>
                 Estructura: <strong>Sujeto + didn't + VERBO NORMAL + Complemento</strong>
             </p>
             <div class="ejemplos-grid">
                 <div class="ejemplo-card" style="border-left-color: var(--rojo);">
-                    <div class="ejemplo-en">I <strong>didn't go</strong> (NOT didn't went ❌).</div>
-                    <div class="ejemplo-es">Yo no fui. (Como ya está 'didn't', el verbo vuelve a su forma normal go).</div>
+                    <div class="ejemplo-en">I <strong>didn't go</strong> <span style="color: var(--rojo); font-size: 0.85em; font-weight: normal; margin-left: 5px;">(I didn't went ❌)</span></div>
+                    <div class="ejemplo-es">Yo no fui. (Como ya está didn't, el verbo vuelve a su forma normal 'go').</div>
                     <div class="ejemplo-pron" style="background: var(--rojo);">🗣 /ai dí-dent góu/</div>
                 </div>
             </div>
         </div>
 
         <div class="pregunta-card">
-            <h3 class="pregunta-titulo"><span>❓</span> La Forma Interrogativa en Pasado</h3>
+            <h3 class="pregunta-titulo"> La Forma Interrogativa en Pasado</h3>
             <p class="bloque-texto" style="color:var(--text2);">
                 Para preguntar, colocamos el auxiliar de pasado <strong>Did</strong> al principio de la frase.<br>
                 Estructura: <strong>Did + Sujeto + VERBO NORMAL + Complemento + ?</strong>
@@ -82,7 +82,7 @@ window.Lecciones.leccion4 = {
         </div>
 
         <div class="nota">
-            <div class="nota-icono">⚠️</div>
+            <div class="nota-icono">💡</div>
             <div>
                 <strong>El Verbo To Be en Pasado es rebelde: Was y Were</strong><br>
                 El verbo To Be en pasado es <strong>was</strong> (para I, He, She, It) y <strong>were</strong> (para You, We, They). Es el único que **no utiliza el auxiliar "didn't" o "did"** para negar o preguntar.<br>

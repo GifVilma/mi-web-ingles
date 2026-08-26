@@ -16,7 +16,7 @@ window.Lecciones.leccion8 = {
     // --- CONTENIDO DE TEORÍA EN HTML ---
     teoria: `
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>💡</span> ¿Qué es el Past Continuous?</h3>
+            <h3 class="bloque-titulo"> ¿Qué es el Past Continuous?</h3>
             <p class="bloque-texto">
                 El <strong>Past Continuous</strong> (Pasado Continuo) se utiliza para hablar de acciones que <strong>estaban ocurriendo</strong> (en progreso) en un momento concreto del pasado. Equivale a nuestro "yo estaba cantando", "tú estabas comiendo", etc.
             </p>
@@ -54,7 +54,7 @@ window.Lecciones.leccion8 = {
         </div>
 
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>📢</span> Oraciones Afirmativas</h3>
+            <h3 class="bloque-titulo"> Oraciones Afirmativas</h3>
             <div class="ejemplos-grid">
                 <div class="ejemplo-card">
                     <div class="ejemplo-en">At 8:00 PM yesterday, I was studying.</div>
@@ -70,7 +70,7 @@ window.Lecciones.leccion8 = {
         </div>
 
         <div class="negacion-card">
-            <h3 class="negacion-titulo"><span>❌</span> La Forma Negativa</h3>
+            <h3 class="negacion-titulo"> La Forma Negativa</h3>
             <p class="bloque-texto" style="color:var(--text2);">
                 Para negar, simplemente añadimos <strong>not</strong> detrás del verbo To Be en pasado. Puedes usar las formas contraídas que son las más comunes en los exámenes. <br>
                 Estructura: <strong>Sujeto + wasn't / weren't + Verbo en -ING</strong>
@@ -90,7 +90,7 @@ window.Lecciones.leccion8 = {
         </div>
 
         <div class="pregunta-card">
-            <h3 class="pregunta-titulo"><span>❓</span> La Forma Interrogativa</h3>
+            <h3 class="pregunta-titulo"> La Forma Interrogativa</h3>
             <p class="bloque-texto" style="color:var(--text2);">
                 Igual que con el verbo To Be normal, ponemos el auxiliar <strong>was/were al principio</strong> de la pregunta.<br>
                 Estructura: <strong>Was / Were + Sujeto + Verbo en -ING + ?</strong>
@@ -110,7 +110,7 @@ window.Lecciones.leccion8 = {
         </div>
 
         <div class="nota">
-            <div class="nota-icono">⚡</div>
+            <div class="nota-icono">💡</div>
             <div>
                 <strong>¡EL TRUCO DE EXAMEN ESTRELLA DE 3º ESO!</strong><br>
                 En los exámenes de este curso, siempre te pedirán combinar el <strong>Past Simple</strong> y el <strong>Past Continuous</strong> en la misma frase usando <strong>WHEN</strong> (cuando) y <strong>WHILE</strong> (mientras). Aprende esta regla de oro:<br><br>

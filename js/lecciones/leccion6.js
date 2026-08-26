@@ -15,7 +15,7 @@ window.Lecciones.leccion6 = {
     // --- CONTENIDO DE TEORÍA EN HTML ---\n
     teoria: `
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>💡</span> ¿Qué son los Modal Verbs?</h3>
+            <h3 class="bloque-titulo"> ¿Qué son los Modal Verbs?</h3>
             <p class="bloque-texto">
                 Los <strong>verbos modales</strong> son verbos auxiliares que se usan para expresar habilidad, posibilidad, permiso, obligación o consejo. <br>
                 En los exámenes de <strong>3º de la ESO</strong>, los profesores siempre evalúan las <strong>3 reglas de oro</strong> de los modales:
@@ -35,7 +35,7 @@ window.Lecciones.leccion6 = {
         </div>
 
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>📢</span> 1. CAN vs COULD (Habilidad y Permiso)</h3>
+            <h3 class="bloque-titulo"> 1. CAN vs COULD (Habilidad y Permiso)</h3>
             <p class="bloque-texto">
                 Usamos <strong>Can</strong> para expresar habilidad o permiso en el presente. <br>
                 Usamos <strong>Could</strong> para el pasado (podía/pude) o para hacer peticiones muy educadas.
@@ -56,7 +56,7 @@ window.Lecciones.leccion6 = {
         </div>
 
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>☝️</span> 2. SHOULD / SHOULDN'T (Consejos)</h3>
+            <h3 class="bloque-titulo"> 2. SHOULD / SHOULDN'T (Consejos)</h3>
             <p class="bloque-texto">
                 Se traduce como <strong>"debería" / "no debería"</strong>. Es el verbo modal que se utiliza para dar consejos, sugerencias o recomendaciones en un examen.
             </p>
@@ -76,7 +76,7 @@ window.Lecciones.leccion6 = {
         </div>
 
         <div class="negacion-card">
-            <h3 class="negacion-titulo"><span>⚠️</span> 3. MUST vs HAVE TO (Obligación)</h3>
+            <h3 class="negacion-titulo"> 3. MUST vs HAVE TO (Obligación)</h3>
             <p class="bloque-texto" style="color:var(--text2);">
                 Ambos expresan obligación fuerte. <strong>Must</strong> es una obligación que sientes tú o una regla escrita. <br>
                 <strong>Have to</strong> (que no es modal puro, por eso lleva "to" y usa auxiliares) es una obligación externa impuesta por otra persona (tus padres, el colegio).
@@ -96,7 +96,7 @@ window.Lecciones.leccion6 = {
         </div>
 
         <div class="nota">
-            <div class="nota-icono">🚨</div>
+            <div class="nota-icono">💡</div>
             <div>
                 <strong>¡LA TRAMPA ESTRELLA DEL INSTITUTO! Mustn't vs Don't Have To</strong><br>
                 En afirmativa significan casi lo mismo, pero en negativa cambian radicalmente:<br>

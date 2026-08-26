@@ -15,7 +15,7 @@ window.Lecciones.leccion7 = {
     // --- CONTENIDO DE TEORÍA EN HTML ---\n
     teoria: `
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>💡</span> ¿Qué es el Present Perfect?</h3>
+            <h3 class="bloque-titulo"> ¿Qué es el Present Perfect?</h3>
             <p class="bloque-texto">
                 El <strong>Present Perfect</strong> conecta el pasado con el presente. Lo usamos principalmente para hablar de <strong>experiencias de vida</strong> (sin decir cuándo ocurrieron exactamentre) o acciones del pasado que tienen un resultado o importancia <strong>ahora mismo</strong>.
             </p>
@@ -50,7 +50,7 @@ window.Lecciones.leccion7 = {
         </div>
 
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>⚠️</span> Las Dos Reglas de Oro</h3>
+            <h3 class="bloque-titulo"> Las Dos Reglas de Oro</h3>
             <p class="bloque-texto">
                 1. <strong>La tercera persona usa HAS:</strong> Recuerda que con <em>He</em>, <em>She</em> e <em>It</em> debes cambiar "have" por <strong>has</strong>. ¡Esta es la trampa básica de los exámenes!<br>
                 2. <strong>El Verbo Principal va en Participio:</strong>
@@ -75,7 +75,7 @@ window.Lecciones.leccion7 = {
         </div>
 
         <div class="bloque-explicacion">
-            <h3 class="bloque-titulo"><span>🚀</span> Palabras Clave de Examen (3º ESO)</h3>
+            <h3 class="bloque-titulo"> Palabras Clave de Examen (3º ESO)</h3>
             <p class="bloque-texto">
                 En 3º de la ESO, la mayor parte del examen de Present Perfect consiste en colocar correctamente estas palabras:
             </p>
@@ -89,7 +89,7 @@ window.Lecciones.leccion7 = {
         </div>
 
         <div class="negacion-card">
-            <h3 class="negacion-titulo"><span>❌</span> La Forma Negativa</h3>
+            <h3 class="negacion-titulo"> La Forma Negativa</h3>
             <p class="bloque-texto" style="color:var(--text2);">
                 Añadimos <strong>not</strong> al auxiliar: <strong>haven't</strong> o <strong>hasn't</strong>. El verbo principal sigue estando en participio.<br>
                 Estructura: <strong>Sujeto + haven't/hasn't + Verbo en Participio + Complementos</strong>
@@ -109,7 +109,7 @@ window.Lecciones.leccion7 = {
         </div>
 
         <div class="pregunta-card">
-            <h3 class="pregunta-titulo"><span>❓</span> La Forma Interrogativa</h3>
+            <h3 class="pregunta-titulo"> La Forma Interrogativa</h3>
             <p class="bloque-texto" style="color:var(--text2);">
                 Para preguntar, cambiamos el orden: colocamos <strong>Have/Has al principio</strong>, delante del sujeto.<br>
                 Estructura: <strong>Have/Has + Sujeto + Verbo en Participio + Complementos + ?</strong>
@@ -129,7 +129,7 @@ window.Lecciones.leccion7 = {
         </div>
 
         <div class="nota">
-            <div class="nota-icono">⚠️</div>
+            <div class="nota-icono">💡</div>
             <div>
                 <strong>¡Diferencia clave para sobresaliente: Been vs Gone!</strong><br>
                 Si vas a un sitio y vuelves, usas <strong>Been</strong>. Si vas a un sitio y te quedas allí (no has vuelto), usas <strong>Gone</strong>.<br>
