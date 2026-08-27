@@ -167,7 +167,7 @@ function generarTarjetasLeccionesDashboard() {
                 <div class="leccion-lock">🔒</div>
                 <div class="leccion-cta" style="color: var(--text3)">Desbloquea con ${index * 200} XP</div>
             ` : `
-                <div class="leccion-cta">¡Empezar Lección! </div>
+                <div class="leccion-cta">¡Empezar Lección! 🚀</div>
             `}
         `;
         contenedor.appendChild(card);
@@ -317,7 +317,7 @@ function inicializarEjerciciosDeLeccion() {
             // Palabras desordenadas
             ej.palabras.forEach((pal, pIndex) => {
                 htmlContenido += `
-                    <button class="ficha" id="ficha-${index}-${pIndex}" onclick="seleccionarFicha(${index}, ${pIndex}, '${pal}')">
+                    <button class="ficha" id="ficha-${index}-${pIndex}" onclick="seleccionarFicha(${index}, ${pIndex}, &quot;${pal}&quot;)">
                         ${pal}
                     </button>
                 `;
