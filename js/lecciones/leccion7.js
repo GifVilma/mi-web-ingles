@@ -128,6 +128,42 @@ window.Lecciones.leccion7 = {
             </div>
         </div>
 
+        <div class="bloque-explicacion">
+            <h3 class="bloque-titulo">Preposiciones de TIEMPO: For vs. Since</h3>
+            <p class="bloque-texto">
+                Para conectar el pasado con el presente indicando cuándo empezó una acción o cuánto tiempo ha durado, usamos estas dos preposiciones clave:
+            </p>
+            
+            <div class="ejemplos-grid">
+                <!-- PREPOSICIÓN: SINCE -->
+                <p class="bloque-texto" style="margin-bottom: 8px;">
+                    • <strong>Since</strong> Se usa para indicar el momento exacto en el que comenzó la acción (el punto de partida).<br>
+                    <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                        Ejemplos: Since 2023 (Desde 2023), Since Monday (Desde el lunes), Since breakfast (Desde el desayuno)
+                    </span>
+                </p>
+                <div class="ejemplo-card" style="border-left-color: var(--naranja); margin-bottom: 20px;">
+                    <div class="ejemplo-en">I have studied here since 2023.</div>
+                    <div class="ejemplo-es">Yo he estudiado aquí desde 2023.</div>
+                    <div class="ejemplo-pron">🗣️ /ai jav es-tá-did jier sins tu táu-sand tuén-ti-zrii/</div>
+                </div>
+
+                <!-- PREPOSICIÓN: FOR -->
+                <p class="bloque-texto" style="margin-bottom: 8px;">
+                    • <strong>For</strong> Se usa para indicar una cantidad o duración total de tiempo (un período transcurrido).<br>
+                    <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                        Ejemplos: For three years (Durante tres años), For ten minutes (Durante diez minutos), For a long time (Durante mucho tiempo)
+                    </span>
+                </p>
+                <div class="ejemplo-card" style="border-left-color: var(--naranja);">
+                    <div class="ejemplo-en">I have studied here for three years.</div>
+                    <div class="ejemplo-es">Yo he estudiado aquí durante tres años.</div>
+                    <div class="ejemplo-pron">🗣️ /ai jav es-tá-did jier for zrii íars/</div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="nota">
             <div class="nota-icono">💡</div>
             <div>

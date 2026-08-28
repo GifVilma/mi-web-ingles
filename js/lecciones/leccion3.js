@@ -108,32 +108,55 @@
                </div>
            </div>
    
-           
-           <div class="bloque-explicacion">
-               <h3 class="bloque-titulo"> ¿In, On o At? Preposiciones de TIEMPO</h3>
-               <p class="bloque-texto">
-                   Para hablar de <strong>cuándo haces tus rutinas</strong> en Present Simple, usamos las preposiciones de tiempo de forma piramidal:
-               </p>
-               <div class="ejemplos-grid">
-                   <div class="ejemplo-card" style="border-left-color: var(--azul);">
-                       <div class="ejemplo-en"><strong>In</strong> (Partes del día / Meses / Años / Estaciones)</div>
-                       <div class="ejemplo-es">In the morning (Por la mañana), In July (En julio), In winter (En invierno).</div>
-                       <div class="ejemplo-pron">🗣️ /in de mór-ning/ • /in shu-lái/</div>
-                   </div>
-                   <div class="ejemplo-card" style="border-left-color: var(--azul);">
-                       <div class="ejemplo-en"><strong>On</strong> (Días de la semana / Fechas específicas / Festivos con 'day')</div>
-                       <div class="ejemplo-es">On Mondays (Los lunes), On August 25th (El 25 de agosto), On my birthday (En mi cumpleaños).</div>
-                       <div class="ejemplo-pron">🗣️ /on mán-deis/ • /on de bérz-dei/</div>
-                   </div>
-                   <div class="ejemplo-card" style="border-left-color: var(--azul);">
-                       <div class="ejemplo-en"><strong>At</strong> (Horas del reloj / Momentos muy precisos del día)</div>
-                       <div class="ejemplo-es">At 7 o'clock (A las 7 en punto), At night (Por la noche), At the weekend (El fin de semana).</div>
-                       <div class="ejemplo-pron">🗣️ /at sé-ven o-cloc/ • /at náit/</div>
-                   </div>
-               </div>
-           </div>
-   
-           <div class="nota">
+          <div class="bloque-explicacion">
+            <h3 class="bloque-titulo">¿In, On o At? Preposiciones de TIEMPO</h3>
+            <p class="bloque-texto">
+                Para hablar de <strong>cuándo haces tus rutinas</strong> en Present Simple, usamos las preposiciones de tiempo de forma piramidal:
+            </p>
+            
+            <div class="ejemplos-grid">
+                <!-- PREPOSICIÓN: IN -->
+                <p class="bloque-texto" style="margin-bottom: 8px;">
+                    • <strong>In</strong> Se usa para partes del día, meses, años o estaciones.<br>
+                    <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                        Ejemplos: In the morning (Por la mañana), In July (En julio), In winter (En invierno)
+                    </span>
+                </p>
+                <div class="ejemplo-card" style="border-left-color: var(--azul); margin-bottom: 20px;">
+                    <div class="ejemplo-en">I study in the morning.</div>
+                    <div class="ejemplo-es">Yo estudio por la mañana.</div>
+                    <div class="ejemplo-pron">🗣️ /ai es-tá-di in de mór-ning/</div>
+                </div>
+
+                <!-- PREPOSICIÓN: ON -->
+                <p class="bloque-texto" style="margin-bottom: 8px;">
+                    • <strong>On</strong> Se usa para días de la semana, fechas específicas o festivos que llevan la palabra 'day'.<br>
+                    <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                        Ejemplos: On Mondays (Los lunes), On August 25th (El 25 de agosto), On my birthday (En mi cumpleaños)
+                    </span>
+                </p>
+                <div class="ejemplo-card" style="border-left-color: var(--azul); margin-bottom: 20px;">
+                    <div class="ejemplo-en">I play tennis on Mondays.</div>
+                    <div class="ejemplo-es">Yo juego al tenis los lunes.</div>
+                    <div class="ejemplo-pron">🗣️ /ai pléi té-nis on mán-deis/</div>
+                </div>
+
+                <!-- PREPOSICIÓN: AT -->
+                <p class="bloque-texto" style="margin-bottom: 8px;">
+                    • <strong>At</strong> Se usa para horas del reloj o momentos muy precisos del día.<br>
+                    <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                        Ejemplos: At 7 o'clock (A las 7 en punto), At night (Por la noche), At the weekend (El fin de semana)
+                    </span>
+                </p>
+                <div class="ejemplo-card" style="border-left-color: var(--azul);">
+                    <div class="ejemplo-en">I wake up at 7 o'clock.</div>
+                    <div class="ejemplo-es">Me despierto a las 7 en punto.</div>
+                    <div class="ejemplo-pron">🗣️ /ai uéik ap at sé-ven o-cloc/</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nota">
                <div class="nota-icono">💡</div>
                <div>
                    <strong>Adverbios de Frecuencia (always, usually, sometimes, never)</strong><br>

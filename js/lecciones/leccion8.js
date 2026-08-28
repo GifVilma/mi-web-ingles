@@ -109,6 +109,54 @@ window.Lecciones.leccion8 = {
             </div>
         </div>
 
+        <div class="bloque-explicacion">
+            <h3 class="bloque-titulo">Preposiciones de MOVIMIENTO CONTINUO</h3>
+            <p class="bloque-texto">
+                Para describir un desplazamiento físico que estaba ocurriendo en un momento determinado del pasado, utilizamos estas preposiciones de trayecto:
+            </p>
+            
+            <div class="ejemplos-grid">
+                <!-- PREPOSICIÓN: ACROSS -->
+                <p class="bloque-texto" style="margin-bottom: 8px;">
+                    • <strong>Across</strong> Se usa para indicar que se cruza una superficie o línea de un lado a otro.<br>
+                    <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                        Ejemplos: Across the street (Cruzar la calle), Across the bridge (A través del puente)
+                    </span>
+                </p>
+                <div class="ejemplo-card" style="border-left-color: var(--azul); margin-bottom: 20px;">
+                    <div class="ejemplo-en">She was walking across the bridge when it started to rain.</div>
+                    <div class="ejemplo-es">Ella estaba cruzando el puente cuando empezó a llover.</div>
+                    <div class="ejemplo-pron">🗣️ /shi was uó-kin a-krós de bridch uen it es-tár-ted tu réin/</div>
+                </div>
+
+                <!-- PREPOSICIÓN: TOWARDS -->
+                <p class="bloque-texto" style="margin-bottom: 8px;">
+                    • <strong>Towards</strong> Se usa para expresar movimiento en dirección a una persona, objeto o lugar concreto.<br>
+                    <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                        Ejemplos: Towards the park (Hacia el parque), Towards me (Hacia mí)
+                    </span>
+                </p>
+                <div class="ejemplo-card" style="border-left-color: var(--azul); margin-bottom: 20px;">
+                    <div class="ejemplo-en">A big dog was running towards us.</div>
+                    <div class="ejemplo-es">Un perro grande estaba corriendo hacia nosotros.</div>
+                    <div class="ejemplo-pron">🗣️ /a big dog was rá-ning tu-uórds as/</div>
+                </div>
+
+                <!-- PREPOSICIÓN: ALONG -->
+                <p class="bloque-texto" style="margin-bottom: 8px;">
+                    • <strong>Along</strong> Se usa para indicar movimiento a lo largo de una línea, camino, carretera o río.<br>
+                    <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                        Ejemplos: Along the river (A lo largo del río), Along the road (A lo largo de la carretera)
+                    </span>
+                </p>
+                <div class="ejemplo-card" style="border-left-color: var(--azul);">
+                    <div class="ejemplo-en">We were driving along the road.</div>
+                    <div class="ejemplo-es">Nosotros estábamos conduciendo a lo largo de la carretera.</div>
+                    <div class="ejemplo-pron">🗣️ /wi uer drái-ving a-lóng de róud/</div>
+                </div>
+            </div>
+        </div>
+        
         <div class="nota">
             <div class="nota-icono">💡</div>
             <div>

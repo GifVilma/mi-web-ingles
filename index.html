@@ -25,7 +25,7 @@
             <nav class="nav">
                 <span class="nav-grupo">Navegación</span>
                 <button class="nav-btn activo" id="btn-inicio" onclick="irAPantalla('inicio')">
-                    <span class="nav-emoji">📚</span> Inicio
+                    <span class="nav-emoji">🎒</span> Inicio
                 </button>
                 
                 <span class="nav-grupo">Elige tu Lección</span>
@@ -33,14 +33,15 @@
                 <div class="selector-leccion-container">
                     <select id="selector-lecciones" class="selector-lecciones" onchange="seleccionarLeccionDesdeDesplegable(this.value)">
                         <option value="" disabled selected> Selecciona un tema...</option>
-                        <option value="leccion1">Lección 1: Verbo To Be </option>
-                        <option value="leccion2">Lección 2: Personal Pronouns </option>
-                        <option value="leccion3">Lección 3: Present Simple </option>
-                        <option value="leccion4">Lección 4: Past Simple </option>
-                        <option value="leccion5">Lección 5: Future (Will/Going to) </option>
-                        <option value="leccion6">Lección 6: Modal Verbs </option>
-                        <option value="leccion7">Lección 7: Present Perfect Simple </option>
-                        <option value="leccion8">Lección 8: Past Continuous </option>
+                        <option value="leccion1">Lección 1: Verbo To Be 📚</option>
+                        <option value="leccion2">Lección 2: Personal Pronouns 👤</option>
+                        <option value="leccion3">Lección 3: Present Simple 🕒</option>
+                        <option value="leccion4">Lección 4: Past Simple 📜</option>
+                        <option value="leccion5">Lección 5: Future (Will/Going to) 📋</option>
+                        <option value="leccion6">Lección 6: Modal Verbs 📝</option>
+                        <option value="leccion7">Lección 7: Present Perfect ⏳</option>
+                        <option value="leccion8">Lección 8: Past Continuous 🎬</option>
+                        <option value="leccion9">Lección 9: Conditionals 🧩</option>
                     </select>
                 </div>
 
@@ -50,7 +51,10 @@
 
                 <span class="nav-grupo">Práctica</span>
                 <button class="nav-btn" id="btn-errores" onclick="irAPantalla('errores')">
-                    Mis Errores <span class="error-badge" id="contador-errores">0</span>
+                    <span class="nav-emoji">✏️</span> Mis Errores <span class="error-badge" id="contador-errores">0</span>
+                </button>
+                <button class="nav-btn" id="btn-examen" onclick="comenzarExamenGlobal()">
+                    <span class="nav-emoji">🎓</span> Examen Global
                 </button>
             </nav>
 
@@ -88,9 +92,9 @@
                         <div class="prog-fill" id="xp-barra" style="width: 30%;"></div>
                     </div>
                     <div class="prog-etapas">
-                        <span>Inicio</span>
-                        <span>Intermedio</span>
-                        <span>Experto</span>
+                        <span>Inicio </span>
+                        <span>Intermedio </span>
+                        <span>Experto </span>
                     </div>
                 </div>
 
@@ -110,9 +114,10 @@
                     <p class="leccion-desc-hero" id="leccion-desc-dinamica">Cargando la descripción de la lección activa de forma dinámica.</p>
                 </div>
 
-                <!-- Navegación de pestañas internas (Teoría, Ejercicios, Conversación) -->
+                <!-- Navegación de pestañas internas (Teoría, Vocabulario, Ejercicios, Conversación) -->
                 <div class="tabs-leccion">
                     <button class="tab-btn activo" onclick="cambiarTab('teoria')">📚 Teoría</button>
+                    <button class="tab-btn" onclick="cambiarTab('vocabulario')">🎴 Vocabulario</button>
                     <button class="tab-btn" onclick="cambiarTab('ejercicios')">✏️ Ejercicios</button>
                     <button class="tab-btn" onclick="cambiarTab('conversacion')">💬 Conversación</button>
                 </div>
@@ -122,6 +127,41 @@
                     <!-- Pestaña: Teoría -->
                     <div class="tab-pane activo" id="tab-teoria">
                         <!-- Aquí se inyecta la teoría dinámicamente -->
+                    </div>
+
+                    <!-- Pestaña: Vocabulario -->
+                    <div class="tab-pane" id="tab-vocabulario">
+                        <div class="vocab-meta">
+                            <span class="vocab-prog-text" id="vocab-progreso-texto">Tarjeta 1 de 5</span>
+                            <div class="vocab-prog-bar">
+                                <div class="vocab-prog-fill" id="vocab-progreso-barra" style="width: 20%;"></div>
+                            </div>
+                        </div>
+                        <div class="vocab-flip-hint">💡 Haz clic en la tarjeta para darle la vuelta</div>
+                        
+                        <div class="card-deck">
+                            <div class="flip-wrapper" id="vocab-card-wrapper" onclick="girarTarjetaVocabulario()">
+                                <!-- Cara Frontal (Español) -->
+                                <div class="card-face card-front">
+                                    <span class="es-label">Español</span>
+                                    <h2 class="es-word" id="vocab-espanol">Cargando...</h2>
+                                    <p class="es-hint">¿Cómo se dice en inglés? 🤔</p>
+                                </div>
+                                <!-- Cara Trasera (Inglés) -->
+                                <div class="card-face card-back">
+                                    <span class="en-label">Inglés</span>
+                                    <h2 class="en-word" id="vocab-ingles">Cargando...</h2>
+                                    <p class="en-ipa" id="vocab-pronunciacion">...</p>
+                                    <p class="en-example" id="vocab-ejemplo">...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="vocab-btns">
+                            <button class="btn btn-rojo btn-sm" onclick="anteriorTarjetaVocabulario()">⬅️ Anterior</button>
+                            <button class="btn btn-verde" id="btn-vocab-sabe" onclick="saberPalabraVocabulario()">¡Me la sé! 👍</button>
+                            <button class="btn btn-sm" onclick="siguienteTarjetaVocabulario()">Siguiente ➡️</button>
+                        </div>
                     </div>
 
                     <!-- Pestaña: Ejercicios -->
@@ -153,7 +193,7 @@
                             <textarea id="texto-respuesta-conversacion" placeholder="Escribe tu respuesta en inglés aquí..." rows="2"></textarea>
                             <div class="fila-zona">
                                 <span class="pista-conv" id="conversacion-pista">Pista: Puedes usar las estructuras estudiadas para responder.</span>
-                                <button class="btn btn-principal btn-sm" onclick="enviarMensajeConversacion()">Enviar Mensaje </button>
+                                <button class="btn btn-principal btn-sm" onclick="enviarMensajeConversacion()">Enviar Mensaje</button>
                             </div>
                         </div>
 
@@ -166,11 +206,57 @@
                 </div>
             </section>
 
+            <!-- PANTALLA 4: EXAMEN GLOBAL -->
+            <section class="pantalla" id="pantalla-examen">
+                <div class="leccion-cabecera" style="background: linear-gradient(135deg, var(--naranja), #f39c12);">
+                    <span class="leccion-tag">Evaluación Final</span>
+                    <h1 class="leccion-h1">Examen Global 🎓</h1>
+                    <p class="leccion-desc-hero">Demuestra tus conocimientos respondiendo a 10 preguntas aleatorias de todas las lecciones. ¡Consigue +100 XP extras por completarlo!</p>
+                </div>
+
+                <div id="examen-container" class="bloque-explicacion">
+                    <!-- Aquí se inyecta dinámicamente el estado del examen -->
+                    <div id="examen-inicio" style="text-align: center; padding: 20px 0;">
+                        <p class="bloque-texto" style="font-size: 16px;">
+                            El examen consta de <strong>10 preguntas de opción múltiple</strong> seleccionadas al azar entre todo el temario (Lecciones 1 a 9).<br>
+                            ¡Piensa bien antes de responder! No podrás cambiar de respuesta una vez seleccionada.
+                        </p>
+                        <button class="btn btn-principal btn-lg" onclick="iniciarPreguntasExamen()">¡Empezar Examen! </button>
+                    </div>
+
+                    <div id="examen-juego" style="display: none;">
+                        <div class="vocab-meta" style="margin-bottom: 20px;">
+                            <span class="vocab-prog-text" id="examen-progreso-texto">Pregunta 1 de 10</span>
+                            <div class="vocab-prog-bar">
+                                <div class="vocab-prog-fill" id="examen-progreso-barra" style="width: 10%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="ejercicio-wrap" style="box-shadow: none; border: none; padding: 0;">
+                            <span class="ejercicio-instruccion" id="examen-pregunta-tema">De la lección: Cargando...</span>
+                            <h2 class="ejercicio-pregunta" id="examen-pregunta-texto">¿Pregunta?</h2>
+                            <div class="opciones-ej" id="examen-opciones">
+                                <!-- Botones de opción múltiple se generan aquí -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="examen-resultados" style="display: none; text-align: center; padding: 20px 0;">
+                        <h2 class="hero-titulo" style="color: var(--naranja); margin-bottom: 12px;" id="examen-resultado-titulo">¡Examen Completado! 🎉</h2>
+                        <p class="bloque-texto" id="examen-resultado-texto" style="font-size: 16px;"></p>
+                        <div id="examen-desglose-errores" style="text-align: left; margin-top: 20px; max-height: 250px; overflow-y: auto; padding-right: 10px;">
+                            <!-- Desglose de preguntas falladas para repasar -->
+                        </div>
+                        <button class="btn btn-principal" style="margin-top: 20px;" onclick="irAPantalla('inicio')">Volver al Inicio 🏠</button>
+                    </div>
+                </div>
+            </section>
+
             <!-- PANTALLA 3: HISTORIAL DE ERRORES -->
             <section class="pantalla" id="pantalla-errores">
                 <div class="leccion-cabecera" style="background: #e76f51;">
                     <span class="leccion-tag">Revisión Personalizada</span>
-                    <h1 class="leccion-h1">Tu Registro de Errores</h1>
+                    <h1 class="leccion-h1">Tu Registro de Errores ✏️</h1>
                     <p class="leccion-desc-hero">Repasa las preguntas que has fallado en los ejercicios interactivos. Cuantas más veces falles una pregunta, más alta será su prioridad para repasar.</p>
                 </div>
 
@@ -196,7 +282,7 @@
     <div class="xp-pop" id="popup-celebracion-xp">
         <div class="xp-num" id="popup-xp-cantidad">+50 XP</div>
         <div class="xp-msg">¡Increíble! Lección completada con éxito 🎉</div>
-        <button class="btn btn-principal btn-sm" style="margin-top: 16px;" onclick="cerrarPopupXP()">¡Genial! 🚀</button>
+        <button class="btn btn-principal btn-sm" style="margin-top: 16px;" onclick="cerrarPopupXP()">¡Genial!</button>
     </div>
 
     <!-- CARGA DE ARCHIVOS DE LECCIONES -->
@@ -209,7 +295,7 @@
     <script src="js/lecciones/leccion6.js"></script>
     <script src="js/lecciones/leccion7.js"></script>
     <script src="js/lecciones/leccion8.js"></script>
-
+    <script src="js/lecciones/leccion9.js"></script>
     
     <!-- MOTOR PRINCIPAL -->
     <script src="app.js"></script>

@@ -134,6 +134,55 @@
                </div>
            </div>
    
+            <div class="bloque-explicacion">
+                <h3 class="bloque-titulo">Preposiciones de POSICIÓN FÍSICA</h3>
+                <p class="bloque-texto">
+                    Para describir exactamente dónde está situado un objeto o una persona respecto a otra, utilizamos estas preposiciones de posición:
+                </p>
+            
+                <div class="ejemplos-grid">
+                    <!-- PREPOSICIÓN: NEXT TO -->
+                    <p class="bloque-texto" style="margin-bottom: 8px;">
+                        • <strong>Next to</strong> Se usa para indicar que algo o alguien está inmediatamente al lado de otra cosa.<br>
+                        <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                            Ejemplos: Next to the library (Al lado de la biblioteca), Next to the computer (Al lado del ordenador)
+                        </span>
+                    </p>
+                    <div class="ejemplo-card" style="border-left-color: var(--naranja); margin-bottom: 20px;">
+                        <div class="ejemplo-en">She is sitting next to me.</div>
+                        <div class="ejemplo-es">Ella está sentada al lado de mí.</div>
+                        <div class="ejemplo-pron">🗣️ /shi is sí-tin nekst tu mi/</div>
+                    </div>
+
+                    <!-- PREPOSICIÓN: BEHIND -->
+                    <p class="bloque-texto" style="margin-bottom: 8px;">
+                        • <strong>Behind</strong> Se usa cuando algo o alguien está en la parte trasera o posterior de otro elemento.<br>
+                        <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                            Ejemplos: Behind the door (Detrás de la puerta), Behind the teacher (Detrás del profesor)
+                        </span>
+                    </p>
+                    <div class="ejemplo-card" style="border-left-color: var(--naranja); margin-bottom: 20px;">
+                        <div class="ejemplo-en">The dog is running behind him.</div>
+                        <div class="ejemplo-es">El perro está corriendo detrás de él.</div>
+                        <div class="ejemplo-pron">🗣️ /de dog is rá-ning bi-jáind jim/</div>
+                    </div>
+
+                    <!-- PREPOSICIÓN: UNDER -->
+                    <p class="bloque-texto" style="margin-bottom: 8px;">
+                        • <strong>Under</strong> Se usa para indicar que algo está debajo de otra cosa o cubierto por ella.<br>
+                        <span style="color: var(--text3); font-size: 14px; font-style: italic; display: inline-block; margin-top: 4px;">
+                            Ejemplos: Under the table (Debajo de la mesa), Under the bed (Debajo de la cama)
+                        </span>
+                    </p>
+                    <div class="ejemplo-card" style="border-left-color: var(--naranja);">
+                        <div class="ejemplo-en">The cat is sleeping under it.</div>
+                        <div class="ejemplo-es">El gato está durmiendo debajo de ello.</div>
+                        <div class="ejemplo-pron">🗣️ /de kat is es-líi-pin án-der it/</div>
+                    </div>
+                </div>
+            </div>
+
+           
            <div class="nota">
                <div class="nota-icono">💡</div>
                <div>

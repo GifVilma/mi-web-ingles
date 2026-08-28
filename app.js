@@ -12,7 +12,9 @@ let appState = {
     tabActiva: 'teoria',
     errores: [],
     conversacionTurno: 0,
-    conversacionCompletada: false
+    conversacionCompletada: false,
+    vocabularioIndice: 0,
+    vocabularioSaber: {}
 };
 
 // Cargar estado inicial desde el navegador si existe
@@ -50,7 +52,7 @@ function actualizarEstadisticasVisuales() {
         const nivelActual = Math.floor(appState.xp / 500) + 1;
         const xpEnEsteNivel = appState.xp % 500;
         
-        nivelNombreEl.innerHTML = `Nivel ${nivelActual} - ${obtenerNombreNivel(nivelActual)} 🌟`;
+        nivelNombreEl.innerHTML = `Nivel ${nivelActual} - ${obtenerNombreNivel(nivelActual)}`;
         xpTextoEl.textContent = `${xpEnEsteNivel} / 500 XP`;
         
         const porcentaje = (xpEnEsteNivel / 500) * 100;
@@ -118,12 +120,16 @@ function cambiarTab(tabId) {
     if (tabsContainer) {
         const botones = tabsContainer.querySelectorAll('.tab-btn');
         if (tabId === 'teoria' && botones[0]) botones[0].classList.add('activo');
-        if (tabId === 'ejercicios' && botones[1]) {
+        if (tabId === 'vocabulario' && botones[1]) {
             botones[1].classList.add('activo');
+            inicializarVocabularioDeLeccion();
+        }
+        if (tabId === 'ejercicios' && botones[2]) {
+            botones[2].classList.add('activo');
             inicializarEjerciciosDeLeccion();
         }
-        if (tabId === 'conversacion' && botones[2]) {
-            botones[2].classList.add('activo');
+        if (tabId === 'conversacion' && botones[3]) {
+            botones[3].classList.add('activo');
             inicializarConversacionDeLeccion();
         }
     }
@@ -167,7 +173,7 @@ function generarTarjetasLeccionesDashboard() {
                 <div class="leccion-lock">🔒</div>
                 <div class="leccion-cta" style="color: var(--text3)">Desbloquea con ${index * 200} XP</div>
             ` : `
-                <div class="leccion-cta">¡Empezar Lección! 🚀</div>
+                <div class="leccion-cta">¡Empezar Lección!</div>
             `}
         `;
         contenedor.appendChild(card);
@@ -286,10 +292,18 @@ function inicializarEjerciciosDeLeccion() {
         wrap.className = 'ejercicio-wrap';
         wrap.id = `ejercicio-${index}`;
 
+        // Determinar instruccion segun tipo de ejercicio (sin emojis nuevos)
+        let instruccion = 'Escribe la respuesta';
+        if (ej.tipo === 'test') {
+            instruccion = 'Elige la opción correcta';
+        } else if (ej.tipo === 'ordenar') {
+            instruccion = 'Ordena la oración';
+        }
+
         // Estructura general de la pregunta
         let htmlContenido = `
             <span class="ejercicio-numero">${index + 1}</span>
-            <span class="ejercicio-instruccion">${ej.tipo === 'test' ? 'Elige la opción correcta' : 'Ordena la oración'}</span>
+            <span class="ejercicio-instruccion">${instruccion}</span>
             <div class="ejercicio-pregunta">${ej.pregunta}</div>
         `;
 
@@ -327,6 +341,15 @@ function inicializarEjerciciosDeLeccion() {
                 </div>
                 <button class="btn btn-principal btn-sm" id="btn-comprobar-orden-${index}" style="margin-top:10px;" onclick="comprobarRespuestaOrdenar('${appState.leccionActiva}', ${index})">
                     Comprobar frase 🔍
+                </button>
+            `;
+        }
+        else if (ej.tipo === 'escribir') {
+            // Renderizar campo de escritura directa (sin emojis)
+            htmlContenido += `
+                <input type="text" class="input-escribir" id="input-escribir-${index}" placeholder="${ej.placeholder || 'Escribe tu respuesta en inglés aquí...'}" autocomplete="off">
+                <button class="btn btn-principal btn-sm" id="btn-comprobar-escribir-${index}" style="margin-top:10px;" onclick="comprobarRespuestaEscribir('${appState.leccionActiva}', ${index})">
+                    Comprobar respuesta
                 </button>
             `;
         }
@@ -466,6 +489,62 @@ function comprobarRespuestaOrdenar(leccionId, ejIndex) {
     }
 }
 
+function comprobarRespuestaEscribir(leccionId, ejIndex) {
+    const leccion = window.Lecciones[leccionId];
+    const ejercicio = leccion.ejercicios[ejIndex];
+    const inputEl = document.getElementById(`input-escribir-${ejIndex}`);
+    const feedbackEl = document.getElementById(`resultado-ej-${ejIndex}`);
+    const btnComprobar = document.getElementById(`btn-comprobar-escribir-${ejIndex}`);
+
+    if (!inputEl) return;
+    const respuestaUsuario = inputEl.value.trim();
+
+    if (respuestaUsuario === '') {
+        mostrarToast("⚠️ Escribe tu respuesta antes de comprobar.");
+        return;
+    }
+
+    // Desactivar entrada y boton
+    inputEl.disabled = true;
+    if (btnComprobar) btnComprobar.disabled = true;
+
+    // Comparacion flexible: minusculas, sin puntos/signos finales, espacios limpios
+    const limpiarTexto = (str) => {
+        return str
+            .toLowerCase()
+            .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
+    };
+
+    const respuestaUsuarioLimpia = limpiarTexto(respuestaUsuario);
+    
+    // El ejercicio puede tener una respuesta unica o un array de respuestas validas
+    let esCorrecto = false;
+    let correctaMostrar = "";
+
+    if (ejercicio.respuestasCorrectas && Array.isArray(ejercicio.respuestasCorrectas)) {
+        esCorrecto = ejercicio.respuestasCorrectas.some(resp => limpiarTexto(resp) === respuestaUsuarioLimpia);
+        correctaMostrar = ejercicio.respuestasCorrectas[0];
+    } else {
+        const sol = ejercicio.respuestaCorrecta || ejercicio.correcta;
+        esCorrecto = (limpiarTexto(sol) === respuestaUsuarioLimpia);
+        correctaMostrar = sol;
+    }
+
+    if (esCorrecto) {
+        feedbackEl.className = 'resultado-ej resultado-bien visible';
+        feedbackEl.innerHTML = `🌟 <strong>¡Excelente!</strong> Respuesta correcta. +20 XP.<br><small>${ejercicio.explicacion}</small>`;
+        ganarXP(20);
+    } else {
+        feedbackEl.className = 'resultado-ej resultado-mal visible';
+        feedbackEl.innerHTML = `❌ <strong>No es correcto.</strong> La respuesta esperada era:<br><span class="razon">"${correctaMostrar}"</span>.<br><small>${ejercicio.explicacion}</small>`;
+        
+        // Registrar error para el repaso
+        registrarError(ejercicio.pregunta, respuestaUsuario, correctaMostrar, ejercicio.explicacion, leccion.titulo);
+    }
+}
+
 // --- SISTEMA DE REGISTRO DE ERRORES ---
 function registrarError(pregunta, opcionAlumnno, correcta, explicacion, leccionTitulo) {
     // Verificar si el error ya está registrado para incrementar las veces falladas
@@ -498,7 +577,7 @@ function renderizarErrores() {
     if (appState.errores.length === 0) {
         contenedor.innerHTML = `
             <div class="no-errores-mensaje">
-                🎉 ¡Excelente! No tienes errores registrados actualmente. Tu hijo va por muy buen camino. Sigue practicando.
+                🎉 ¡Excelente! No tienes errores registrados actualmente. ¡Vas por muy buen camino! Sigue practicando.
             </div>
         `;
         return;
@@ -634,7 +713,7 @@ function enviarMensajeConversacion() {
             if (panelAnalis && textoAnalis) {
                 textoAnalis.innerHTML = `
                     <strong>¡Increíble conversación con el robot!</strong> 🎓<br><br>
-                    Tu hijo ha completado con éxito la sesión interactiva de conversación práctica.<br>
+                    Has completado con éxito la sesión interactiva de conversación práctica.<br>
                     📌 <strong>Aspectos clave evaluados:</strong><br>
                     - Comprensión lectora del escenario: 100% Correcto.<br>
                     - Uso correcto de la estructura temática central de esta lección.<br>
@@ -660,3 +739,537 @@ window.addEventListener('DOMContentLoaded', () => {
         generarTarjetasLeccionesDashboard();
     }, 200);
 });
+
+
+// ==========================================================================
+// --- SISTEMA DE VOCABULARIO INTERACTIVO (FLASHCARDS) 🎴 ---
+// ==========================================================================
+
+const VOCABULARIO_FALLBACK = {
+    leccion1: [
+        { es: "Feliz", en: "Happy", pron: "/ˈhæpi/", ej: "She is very happy today." },
+        { es: "Triste", en: "Sad", pron: "/sæd/", ej: "He is sad because of the rain." },
+        { es: "Cansado", en: "Tired", pron: "/ˈtaɪəd/", ej: "I am tired after school." },
+        { es: "Hambriento", en: "Hungry", pron: "/ˈhʌŋɡri/", ej: "Are you hungry?" },
+        { es: "Estudiante", en: "Student", pron: "/ˈstjuːdənt/", ej: "I am a student." }
+    ],
+    leccion2: [
+        { es: "Mi / Mis", en: "My", pron: "/maɪ/", ej: "This is my dog." },
+        { es: "Tu / Tus", en: "Your", pron: "/jɔː/", ej: "Is this your book?" },
+        { es: "Su / Sus (de ellos)", en: "Their", pron: "/ðeə/", ej: "Their house is big." },
+        { es: "Nuestro/a", en: "Our", pron: "/ˈaʊə/", ej: "Our teacher is nice." },
+        { es: "Amigo/a", en: "Friend", pron: "/frend/", ej: "She is my best friend." }
+    ],
+    leccion3: [
+        { es: "Siempre", en: "Always", pron: "/ˈɔːlweɪz/", ej: "I always play football on Saturdays." },
+        { es: "Nunca", en: "Never", pron: "/ˈnevə/", ej: "He never eats broccoli." },
+        { es: "Cada día", en: "Every day", pron: "/ˈevri deɪ/", ej: "She studies English every day." },
+        { es: "Normalmente", en: "Usually", pron: "/ˈjuːʒʊəli/", ej: "We usually watch a movie." },
+        { es: "Hacer deberes", en: "Do homework", pron: "/duː ˈhəʊm.wɜːk/", ej: "They do homework after class." }
+    ],
+    leccion4: [
+        { es: "Ayer", en: "Yesterday", pron: "/ˈjestədeɪ/", ej: "We watched a movie yesterday." },
+        { es: "El verano pasado", en: "Last summer", pron: "/lɑːst ˈsʌmə/", ej: "He went to Paris last summer." },
+        { es: "Hace...", en: "Ago", pron: "/əˈɡəʊ/", ej: "I finished my homework two hours ago." },
+        { es: "Compró / Compraron", en: "Bought", pron: "/bɔːt/", ej: "She bought a new book." },
+        { es: "Fue / Fueron", en: "Went", pron: "/went/", ej: "They went to the beach." }
+    ],
+    leccion5: [
+        { es: "Mañana", en: "Tomorrow", pron: "/təˈmɒrəʊ/", ej: "We will travel tomorrow." },
+        { es: "La próxima semana", en: "Next week", pron: "/nekst wiːk/", ej: "I am going to visit my granny next week." },
+        { es: "Quizás", en: "Perhaps", pron: "/pəˈhæps/", ej: "Perhaps it will rain later." },
+        { es: "Plan", en: "Plan", pron: "/plæn/", ej: "What is your plan for tonight?" },
+        { es: "Hará / Haré", en: "Will do", pron: "/wɪl duː/", ej: "I will do my best." }
+    ],
+    leccion6: [
+        { es: "Deber (obligación)", en: "Must", pron: "/mʌst/", ej: "You must study for the exam." },
+        { es: "Deberías (consejo)", en: "Should", pron: "/ʃʊd/", ej: "You should drink more water." },
+        { es: "Poder (habilidad)", en: "Can", pron: "/kæn/", ej: "I can speak English." },
+        { es: "Tener que", en: "Have to", pron: "/hæv tuː/", ej: "We have to clean our room." },
+        { es: "Podría", en: "Could", pron: "/kʊd/", ej: "Could you help me, please?" }
+    ],
+    leccion7: [
+        { es: "Desde", en: "Since", pron: "/sɪns/", ej: "I have lived here since 2018." },
+        { es: "Durante / Hace", en: "For", pron: "/fɔː/", ej: "She has studied English for three years." },
+        { es: "Ya", en: "Already", pron: "/ɔːlˈredi/", ej: "They have already eaten lunch." },
+        { es: "Todavía no", en: "Yet", pron: "/jet/", ej: "He hasn't finished his homework yet." },
+        { es: "Acabar de", en: "Just", pron: "/dʒʌst/", ej: "We have just arrived." }
+    ],
+    leccion8: [
+        { es: "Mientras", en: "While", pron: "/waɪl/", ej: "I was reading while he was sleeping." },
+        { es: "Cuando", en: "When", pron: "/wen/", ej: "We were playing soccer when it started to rain." },
+        { es: "Durmiendo", en: "Sleeping", pron: "/ˈsliːpɪŋ/", ej: "What were you doing at 10 PM?" },
+        { es: "Viendo", en: "Watching", pron: "/ˈwɒtʃɪŋ/", ej: "She was watching TV." },
+        { es: "Estudiando", en: "Studying", pron: "/ˈmʌst/", ej: "They were studying all night." }
+    ]
+};
+
+let yaGiroTarjetaEnEstaSesion = {}; // Evita dar XP infinito al girar muchas veces la misma tarjeta
+
+function obtenerVocabularioDeLeccion() {
+    if (!appState.leccionActiva) return [];
+    
+    const leccion = window.Lecciones[appState.leccionActiva];
+    // Prioridad 1: Vocabulario custom definido en la lección independiente
+    if (leccion && leccion.vocabulario && leccion.vocabulario.length > 0) {
+        return leccion.vocabulario;
+    }
+    
+    // Prioridad 2: Vocabulario fallback de app.js
+    if (VOCABULARIO_FALLBACK[appState.leccionActiva]) {
+        return VOCABULARIO_FALLBACK[appState.leccionActiva];
+    }
+    
+    return [];
+}
+
+function inicializarVocabularioDeLeccion() {
+    appState.vocabularioIndice = 0;
+    
+    const wrapper = document.getElementById('vocab-card-wrapper');
+    if (wrapper) {
+        wrapper.classList.remove('flipped');
+    }
+    
+    mostrarTarjetaVocabulario();
+}
+
+function mostrarTarjetaVocabulario() {
+    const vocabLista = obtenerVocabularioDeLeccion();
+    
+    if (vocabLista.length === 0) {
+        const spanEs = document.getElementById('vocab-espanol');
+        if (spanEs) spanEs.textContent = "Pronto disponible";
+        return;
+    }
+    
+    const item = vocabLista[appState.vocabularioIndice];
+    
+    // Cargar contenido en la tarjeta
+    const elEs = document.getElementById('vocab-espanol');
+    const elEn = document.getElementById('vocab-ingles');
+    const elPron = document.getElementById('vocab-pronunciacion');
+    const elEj = document.getElementById('vocab-ejemplo');
+    
+    if (elEs) elEs.textContent = item.es;
+    if (elEn) elEn.textContent = item.en;
+    if (elPron) elPron.textContent = `🗣️ Pronunciación: ${item.pron}`;
+    if (elEj) elEj.textContent = `"${item.ej}"`;
+    
+    // Actualizar barra de progreso
+    const txtProgreso = document.getElementById('vocab-progreso-texto');
+    const barraProgreso = document.getElementById('vocab-progreso-barra');
+    
+    if (txtProgreso) {
+        txtProgreso.textContent = `Tarjeta ${appState.vocabularioIndice + 1} de ${vocabLista.length}`;
+    }
+    
+    if (barraProgreso) {
+        const porcentaje = ((appState.vocabularioIndice + 1) / vocabLista.length) * 100;
+        barraProgreso.style.width = `${porcentaje}%`;
+    }
+    
+    // Si ya sabe esta palabra, deshabilitar botón verde de "¡Me la sé! 👍" para no repetir recompensas
+    const claveSaber = `${appState.leccionActiva}_${appState.vocabularioIndice}`;
+    const btnSabe = document.getElementById('btn-vocab-sabe');
+    if (btnSabe) {
+        if (appState.vocabularioSaber[claveSaber]) {
+            btnSabe.disabled = true;
+            btnSabe.textContent = "¡Ya te la sabes! 🎓";
+            btnSabe.style.opacity = "0.7";
+            btnSabe.style.cursor = "not-allowed";
+        } else {
+            btnSabe.disabled = false;
+            btnSabe.textContent = "¡Me la sé! 👍";
+            btnSabe.style.opacity = "1";
+            btnSabe.style.cursor = "pointer";
+        }
+    }
+}
+
+function girarTarjetaVocabulario() {
+    const wrapper = document.getElementById('vocab-card-wrapper');
+    if (!wrapper) return;
+    
+    wrapper.classList.toggle('flipped');
+    
+    // REPRODUCCIÓN AUTOMÁTICA DEL AUDIO AL GIRAR
+    if (wrapper.classList.contains('flipped')) {
+        const elEn = document.getElementById('vocab-ingles');
+        if (elEn) {
+            setTimeout(() => {
+                decirFraseEnIngles(elEn.textContent);
+            }, 300);
+        }
+    }
+    
+    // Premiar por descubrir la tarjeta por primera vez
+    const claveGiro = `${appState.leccionActiva}_${appState.vocabularioIndice}`;
+    if (!yaGiroTarjetaEnEstaSesion[claveGiro]) {
+        yaGiroTarjetaEnEstaSesion[claveGiro] = true;
+        ganarXP(2); // Otorga +2 XP por explorar
+    }
+}
+
+function siguienteTarjetaVocabulario() {
+    const vocabLista = obtenerVocabularioDeLeccion();
+    if (vocabLista.length === 0) return;
+    
+    const wrapper = document.getElementById('vocab-card-wrapper');
+    if (wrapper) wrapper.classList.remove('flipped');
+    
+    // Esperar a que la tarjeta regrese a su cara frontal antes de cambiar la palabra
+    setTimeout(() => {
+        appState.vocabularioIndice = (appState.vocabularioIndice + 1) % vocabLista.length;
+        mostrarTarjetaVocabulario();
+    }, 200);
+}
+
+function anteriorTarjetaVocabulario() {
+    const vocabLista = obtenerVocabularioDeLeccion();
+    if (vocabLista.length === 0) return;
+    
+    const wrapper = document.getElementById('vocab-card-wrapper');
+    if (wrapper) wrapper.classList.remove('flipped');
+    
+    // Esperar a que regrese antes de cambiar palabra
+    setTimeout(() => {
+        appState.vocabularioIndice = (appState.vocabularioIndice - 1 + vocabLista.length) % vocabLista.length;
+        mostrarTarjetaVocabulario();
+    }, 200);
+}
+
+function saberPalabraVocabulario() {
+    const vocabLista = obtenerVocabularioDeLeccion();
+    if (vocabLista.length === 0) return;
+    
+    const claveSaber = `${appState.leccionActiva}_${appState.vocabularioIndice}`;
+    
+    // Si no se le ha dado premio de saber todavía
+    if (!appState.vocabularioSaber[claveSaber]) {
+        appState.vocabularioSaber[claveSaber] = true;
+        ganarXP(5); // +5 XP por recordar correctamente
+        
+        // Volver a guardar progreso localmente
+        localStorage.setItem('spark_vocab_saber', JSON.stringify(appState.vocabularioSaber));
+        
+        // Animación bonita y pasar de tarjeta automáticamente
+        const wrapper = document.getElementById('vocab-card-wrapper');
+        if (wrapper) {
+            wrapper.classList.remove('flipped');
+        }
+        
+        mostrarTarjetaVocabulario(); // Actualiza botones
+        
+        setTimeout(() => {
+            siguienteTarjetaVocabulario();
+        }, 800);
+    }
+}
+
+// Cargar estado de vocabulario al inicio si existe
+const vocabGuardado = localStorage.getItem('spark_vocab_saber');
+if (vocabGuardado !== null) {
+    appState.vocabularioSaber = JSON.parse(vocabGuardado);
+}
+
+
+// ==========================================================================
+// NUEVA SECCIÓN: REPRODUCTOR DE VOZ (TTS - TEXT TO SPEECH) NATIVO
+// ==========================================================================
+
+function decirFraseEnIngles(texto) {
+    if ('speechSynthesis' in window) {
+        // Cancelar lecturas activas para no amontonar las voces
+        window.speechSynthesis.cancel();
+        
+        // Crear locución
+        const utterance = new SpeechSynthesisUtterance(texto);
+        utterance.lang = 'en-US'; // Inglés neutro
+        
+        // Configurar velocidad ligeramente reducida para que los niños lo entiendan mejor
+        utterance.rate = 0.85; 
+        utterance.pitch = 1.0; // Tono normal de voz
+        
+        // Buscar voz nativa en inglés en el sistema operativo si está disponible
+        const voces = window.speechSynthesis.getVoices();
+        const vozInglesa = voces.find(v => v.lang.startsWith('en'));
+        if (vozInglesa) {
+            utterance.voice = vozInglesa;
+        }
+        
+        window.speechSynthesis.speak(utterance);
+    }
+}
+
+// Escucha activa de clicks para reproducir la voz sin modificar los archivos HTML
+document.addEventListener('click', (e) => {
+    // 1. Clic en las tarjetas de ejemplos de teoría (ejemplo-card) o sobre la pronunciación (ejemplo-pron)
+    const ejemploCard = e.target.closest('.ejemplo-card');
+    if (ejemploCard) {
+        const textoEnEl = ejemploCard.querySelector('.ejemplo-en');
+        if (textoEnEl) {
+            decirFraseEnIngles(textoEnEl.textContent);
+        }
+        return;
+    }
+    
+    // 2. Clic en las etiquetas de pronunciación de los diálogos de conversación (burbuja-pron)
+    const burbujaPron = e.target.closest('.burbuja-pron');
+    if (burbujaPron) {
+        const burbujaDialogo = burbujaPron.closest('.burbuja-dialogo');
+        if (burbujaDialogo) {
+            const textoEnEl = burbujaDialogo.querySelector('strong');
+            if (textoEnEl) {
+                decirFraseEnIngles(textoEnEl.textContent);
+            }
+        }
+        return;
+    }
+    
+    // 3. Clic sobre la pronunciación o texto inglés en la tarjeta de Vocabulario
+    const vocabPron = e.target.closest('#vocab-pronunciacion');
+    const vocabIngles = e.target.closest('#vocab-ingles');
+    if (vocabPron || vocabIngles) {
+        const elEn = document.getElementById('vocab-ingles');
+        if (elEn) {
+            decirFraseEnIngles(elEn.textContent);
+        }
+    }
+});
+
+
+// ==========================================================================
+// --- SISTEMA DE EXAMEN GLOBAL 🏆 ---
+// ==========================================================================
+
+let examenState = {
+    preguntas: [],
+    indice: 0,
+    aciertos: 0,
+    respuestasUsuario: [] // { pregunta, elegida, correcta, explicacion, esCorrecta, tema }
+};
+
+function comenzarExamenGlobal() {
+    // Resetear vistas del examen
+    const elInicio = document.getElementById('examen-inicio');
+    const elJuego = document.getElementById('examen-juego');
+    const elResultados = document.getElementById('examen-resultados');
+    
+    if (elInicio) elInicio.style.display = 'block';
+    if (elJuego) elJuego.style.display = 'none';
+    if (elResultados) elResultados.style.display = 'none';
+    
+    irAPantalla('examen');
+}
+
+function iniciarPreguntasExamen() {
+    if (!window.Lecciones || Object.keys(window.Lecciones).length === 0) {
+        mostrarToast("❌ Error: No hay lecciones cargadas para el examen.");
+        return;
+    }
+
+    // Recopilar todas las preguntas tipo 'test' de todas las lecciones cargadas
+    let todasLasPreguntas = [];
+    
+    Object.keys(window.Lecciones).forEach(key => {
+        const leccion = window.Lecciones[key];
+        if (leccion.ejercicios && Array.isArray(leccion.ejercicios)) {
+            leccion.ejercicios.forEach(ej => {
+                if (ej.tipo === 'test') {
+                    // Copiar pregunta añadiendo el título de la lección para contexto
+                    todasLasPreguntas.push({
+                        ...ej,
+                        tema: leccion.titulo,
+                        leccionId: leccion.id
+                    });
+                }
+            });
+        }
+    });
+
+    if (todasLasPreguntas.length < 5) {
+        mostrarToast("⚠️ Necesitas cargar más lecciones para realizar el examen.");
+        return;
+    }
+
+    // Mezclar aleatoriamente las preguntas (Fisher-Yates shuffle)
+    for (let i = todasLasPreguntas.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [todasLasPreguntas[i], todasLasPreguntas[j]] = [todasLasPreguntas[j], todasLasPreguntas[i]];
+    }
+
+    // Seleccionar hasta 10 preguntas para el examen
+    const numPreguntas = Math.min(todasLasPreguntas.length, 10);
+    examenState.preguntas = todasLasPreguntas.slice(0, numPreguntas);
+    examenState.indice = 0;
+    examenState.aciertos = 0;
+    examenState.respuestasUsuario = [];
+
+    // Ocultar inicio, mostrar juego
+    const elInicio = document.getElementById('examen-inicio');
+    const elJuego = document.getElementById('examen-juego');
+    if (elInicio) elInicio.style.display = 'none';
+    if (elJuego) elJuego.style.display = 'block';
+
+    mostrarPreguntaExamen();
+}
+
+function mostrarPreguntaExamen() {
+    const pregunta = examenState.preguntas[examenState.indice];
+    const totalPreguntas = examenState.preguntas.length;
+    
+    // Actualizar progreso
+    const txtProgreso = document.getElementById('examen-progreso-texto');
+    const barraProgreso = document.getElementById('examen-progreso-barra');
+    if (txtProgreso) {
+        txtProgreso.textContent = `Pregunta ${examenState.indice + 1} de ${totalPreguntas}`;
+    }
+    if (barraProgreso) {
+        barraProgreso.style.width = `${((examenState.indice + 1) / totalPreguntas) * 100}%`;
+    }
+
+    // Renderizar datos de la pregunta
+    const elTema = document.getElementById('examen-pregunta-tema');
+    const elTexto = document.getElementById('examen-pregunta-texto');
+    const elOpciones = document.getElementById('examen-opciones');
+
+    if (elTema) elTema.textContent = `Tema: ${pregunta.tema}`;
+    if (elTexto) elTexto.innerHTML = pregunta.pregunta;
+    if (elOpciones) {
+        elOpciones.innerHTML = '';
+        pregunta.opciones.forEach(op => {
+            const btn = document.createElement('button');
+            btn.className = 'opcion';
+            btn.textContent = op;
+            btn.onclick = () => responderPreguntaExamen(op, btn);
+            elOpciones.appendChild(btn);
+        });
+    }
+}
+
+function responderPreguntaExamen(opcionElegida, botonSeleccionado) {
+    const pregunta = examenState.preguntas[examenState.indice];
+    const totalPreguntas = examenState.preguntas.length;
+    const elOpciones = document.getElementById('examen-opciones');
+    
+    // Desactivar todos los botones de opciones inmediatamente
+    elOpciones.querySelectorAll('.opcion').forEach(btn => btn.disabled = true);
+
+    const esCorrecto = (opcionElegida === pregunta.correcta);
+    
+    // Guardar respuesta del usuario
+    examenState.respuestasUsuario.push({
+        pregunta: pregunta.pregunta,
+        elegida: opcionElegida,
+        correcta: pregunta.correcta,
+        explicacion: pregunta.explicacion,
+        esCorrecta: esCorrecto,
+        tema: pregunta.tema
+    });
+
+    if (esCorrecto) {
+        examenState.aciertos++;
+        botonSeleccionado.classList.add('correcto');
+        mostrarToast("🌟 ¡Correcto!");
+    } else {
+        botonSeleccionado.classList.add('incorrecto');
+        // Resaltar la correcta en verde
+        elOpciones.querySelectorAll('.opcion').forEach(btn => {
+            if (btn.textContent.trim() === pregunta.correcta) {
+                btn.classList.add('revelar');
+            }
+        });
+        mostrarToast("❌ Incorrecto");
+        
+        // Registrar error en el sistema de errores de appState para que repasen luego
+        registrarError(pregunta.pregunta, opcionElegida, pregunta.correcta, pregunta.explicacion, pregunta.tema);
+    }
+
+    // Crear y mostrar botón "Siguiente" de forma elegante
+    const btnSiguiente = document.createElement('button');
+    btnSiguiente.className = 'btn btn-principal btn-sm';
+    btnSiguiente.style.marginTop = '20px';
+    btnSiguiente.style.display = 'block';
+    
+    if (examenState.indice === totalPreguntas - 1) {
+        btnSiguiente.textContent = 'Ver Resultados 🏁';
+        btnSiguiente.onclick = mostrarResultadosExamen;
+    } else {
+        btnSiguiente.textContent = 'Siguiente Pregunta ➡️';
+        btnSiguiente.onclick = () => {
+            examenState.indice++;
+            mostrarPreguntaExamen();
+        };
+    }
+    
+    elOpciones.appendChild(btnSiguiente);
+}
+
+function mostrarResultadosExamen() {
+    const elJuego = document.getElementById('examen-juego');
+    const elResultados = document.getElementById('examen-resultados');
+    
+    if (elJuego) elJuego.style.display = 'none';
+    if (elResultados) elResultados.style.display = 'block';
+
+    const elTitulo = document.getElementById('examen-resultado-titulo');
+    const elTexto = document.getElementById('examen-resultado-texto');
+    const elDesglose = document.getElementById('examen-desglose-errores');
+
+    const aciertos = examenState.aciertos;
+    const total = examenState.preguntas.length;
+    let mensajeCelebracion = '';
+    let xpGanados = aciertos * 10; // +10 XP por cada acierto
+
+    if (aciertos === total) {
+        elTitulo.innerHTML = '¡Examen Perfecto! 🏆💯';
+        mensajeCelebracion = `¡Increíble! Has acertado las ${total} preguntas. Demuestras un nivel excelente en todo el temario.<br><strong>¡Premio especial de +50 XP extras!</strong>`;
+        xpGanados += 50;
+        lanzarCelebracionXP(xpGanados, "¡Examen Perfecto de Inglés! Súper Sobresaliente 🌟");
+    } else if (aciertos >= Math.round(total * 0.7)) {
+        elTitulo.innerHTML = '¡Examen Aprobado! 🎉👏';
+        mensajeCelebracion = `¡Muy buen trabajo! Has acertado ${aciertos} de ${total} preguntas. Vas por un camino fantástico.<br><strong>¡Premio extra de +20 XP!</strong>`;
+        xpGanados += 20;
+        lanzarCelebracionXP(xpGanados, `¡Aprobaste el Examen Global con un ${aciertos}/${total}! 🏆`);
+    } else {
+        elTitulo.innerHTML = 'Examen Terminado 📚✍️';
+        mensajeCelebracion = `Has acertado ${aciertos} de ${total} preguntas. ¡No te rindas! Sigue estudiando la teoría y repasando tus errores para sacar un sobresaliente en el próximo intento.`;
+        ganarXP(xpGanados);
+    }
+
+    if (elTexto) {
+        elTexto.innerHTML = `Has obtenido una puntuación de <strong>${aciertos} / ${total}</strong>.<br>${mensajeCelebracion}`;
+    }
+
+    // Renderizar desglose de aciertos y errores
+    if (elDesglose) {
+        elDesglose.innerHTML = '<h3 class="seccion-etiqueta" style="margin-bottom: 12px; font-size:12px;">Desglose de tus respuestas:</h3>';
+        
+        examenState.respuestasUsuario.forEach((resp, idx) => {
+            const item = document.createElement('div');
+            item.style.padding = '12px';
+            item.style.borderBottom = '1px solid var(--borde)';
+            item.style.fontSize = '13px';
+            
+            const icono = resp.esCorrecta ? '✅' : '❌';
+            const colorTexto = resp.esCorrecta ? 'var(--verde)' : 'var(--rojo)';
+            
+            let desgloseHTML = `
+                <div style="font-weight:700; margin-bottom: 4px;">${idx + 1}. ${icono} ${resp.pregunta}</div>
+                <div style="color: var(--text3); font-size:11px; margin-bottom: 4px;">Lección: ${resp.tema}</div>
+                <div style="font-weight:600;">Tu respuesta: <span style="color:${colorTexto};">${resp.elegida}</span></div>
+            `;
+
+            if (!resp.esCorrecta) {
+                desgloseHTML += `
+                    <div style="font-weight:600; color:var(--verde);">Respuesta correcta: ${resp.correcta}</div>
+                    <div style="font-size:12px; color:var(--amarillo); font-style:italic; margin-top:4px;">💡 Explicación: ${resp.explicacion}</div>
+                `;
+            }
+
+            item.innerHTML = desgloseHTML;
+            elDesglose.appendChild(item);
+        });
+    }
+}
