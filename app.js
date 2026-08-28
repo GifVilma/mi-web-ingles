@@ -214,6 +214,17 @@ function cargarLeccion(leccionId) {
     const tabTeoria = document.getElementById('tab-teoria');
     if (tabTeoria) {
         tabTeoria.innerHTML = leccion.teoria;
+        
+        // Añadir listeners directos a las tarjetas de ejemplos para evitar que Safari bloquee el audio por delegación
+        tabTeoria.querySelectorAll('.ejemplo-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', (e) => {
+                const textoEnEl = card.querySelector('.ejemplo-en');
+                if (textoEnEl) {
+                    decirFraseEnIngles(textoEnEl.textContent);
+                }
+            });
+        });
     }
 
     // Ir a la pantalla de lección y seleccionar pestaña Teoría
@@ -671,6 +682,15 @@ function agregarBurbujaMensaje(remitente, enText, esText, pronText, emoji) {
 
     contenedorChat.appendChild(msgDiv);
     
+    // Añadir listener directo al diálogo de conversación para reproducción de voz inmediata en iOS/Safari
+    const burbujaDialogo = msgDiv.querySelector('.burbuja-dialogo');
+    if (burbujaDialogo) {
+        burbujaDialogo.style.cursor = 'pointer';
+        burbujaDialogo.addEventListener('click', () => {
+            decirFraseEnIngles(enText);
+        });
+    }
+    
     // Auto-scroll hacia abajo
     contenedorChat.scrollTop = contenedorChat.scrollHeight;
 }
@@ -973,7 +993,6 @@ if (vocabGuardado !== null) {
     appState.vocabularioSaber = JSON.parse(vocabGuardado);
 }
 
-
 // ==========================================================================
 // NUEVA SECCIÓN: REPRODUCTOR DE VOZ (TTS - TEXT TO SPEECH) NATIVO
 // ==========================================================================
@@ -1017,7 +1036,7 @@ function decirFraseEnIngles(texto) {
                 v.name.includes('Susan') ||              // macOS
                 v.name.includes('Tessa')                 // macOS UK
             ) || vocesInglesas.find(v => v.name.toLowerCase().includes('female')) 
-              || vocesInglesas; // Si no encuentra ninguna preferida, usa la primera en inglés que haya
+              || vocesInglesas[0]; // Si no encuentra ninguna preferida, usa la primera en inglés que haya
             
             utterance.voice = vozAmigable;
         }
@@ -1025,6 +1044,20 @@ function decirFraseEnIngles(texto) {
         window.speechSynthesis.speak(utterance);
     }
 }
+
+// Escucha activa de clicks para reproducir la voz de vocabulario
+document.addEventListener('click', (e) => {
+    // Clic sobre la pronunciación o texto inglés en la tarjeta de Vocabulario
+    const vocabPron = e.target.closest('#vocab-pronunciacion');
+    const vocabIngles = e.target.closest('#vocab-ingles');
+    if (vocabPron || vocabIngles) {
+        const elEn = document.getElementById('vocab-ingles');
+        if (elEn) {
+            decirFraseEnIngles(elEn.textContent);
+        }
+    }
+});
+
 
 // ==========================================================================
 // --- SISTEMA DE EXAMEN GLOBAL 🏆 ---
