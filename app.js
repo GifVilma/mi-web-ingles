@@ -978,6 +978,16 @@ if (vocabGuardado !== null) {
 // NUEVA SECCIÓN: REPRODUCTOR DE VOZ (TTS - TEXT TO SPEECH) NATIVO
 // ==========================================================================
 
+// 1. PRECARGAR LAS VOCES (Soluciona el problema de la lista vacía en Chrome al arrancar)
+if ('speechSynthesis' in window) {
+    window.speechSynthesis.getVoices();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.getVoices();
+        };
+    }
+}
+
 function decirFraseEnIngles(texto) {
     if ('speechSynthesis' in window) {
         // Cancelar lecturas activas para no amontonar las voces
@@ -985,59 +995,36 @@ function decirFraseEnIngles(texto) {
         
         // Crear locución
         const utterance = new SpeechSynthesisUtterance(texto);
-        utterance.lang = 'en-US'; // Inglés neutro
+        utterance.lang = 'en-US'; // Inglés americano neutro
         
-        // Configurar velocidad ligeramente reducida para que los niños lo entiendan mejor
-        utterance.rate = 0.85; 
-        utterance.pitch = 1.0; // Tono normal de voz
+        // Configuración de tono y velocidad
+        utterance.rate = 0.85;  // Un poquito más pausado para que los alumnos lo entiendan mejor
+        utterance.pitch = 1.05; // Sube un pelín el tono para que suene más viva y menos grave
         
-        // Buscar voz nativa en inglés en el sistema operativo si está disponible
+        // Obtener todas las voces instaladas en el dispositivo del usuario
         const voces = window.speechSynthesis.getVoices();
-        const vozInglesa = voces.find(v => v.lang.startsWith('en'));
-        if (vozInglesa) {
-            utterance.voice = vozInglesa;
+        
+        // Filtrar únicamente las que están en inglés
+        const vocesInglesas = voces.filter(v => v.lang.startsWith('en'));
+        
+        if (vocesInglesas.length > 0) {
+            // Buscamos prioritariamente voces femeninas de alta calidad (claras y dulces)
+            const vozAmigable = vocesInglesas.find(v => 
+                v.name.includes('Google US English') ||  // Chrome/Android (Súper clara y natural)
+                v.name.includes('Samantha') ||           // macOS/iOS (La de Siri clásica, limpia y amigable)
+                v.name.includes('Zira') ||               // Windows (Femenina clara)
+                v.name.includes('Hazel') ||              // Windows UK (Voz británica muy bonita)
+                v.name.includes('Susan') ||              // macOS
+                v.name.includes('Tessa')                 // macOS UK
+            ) || vocesInglesas.find(v => v.name.toLowerCase().includes('female')) 
+              || vocesInglesas; // Si no encuentra ninguna preferida, usa la primera en inglés que haya
+            
+            utterance.voice = vozAmigable;
         }
         
         window.speechSynthesis.speak(utterance);
     }
 }
-
-// Escucha activa de clicks para reproducir la voz sin modificar los archivos HTML
-document.addEventListener('click', (e) => {
-    // 1. Clic en las tarjetas de ejemplos de teoría (ejemplo-card) o sobre la pronunciación (ejemplo-pron)
-    const ejemploCard = e.target.closest('.ejemplo-card');
-    if (ejemploCard) {
-        const textoEnEl = ejemploCard.querySelector('.ejemplo-en');
-        if (textoEnEl) {
-            decirFraseEnIngles(textoEnEl.textContent);
-        }
-        return;
-    }
-    
-    // 2. Clic en las etiquetas de pronunciación de los diálogos de conversación (burbuja-pron)
-    const burbujaPron = e.target.closest('.burbuja-pron');
-    if (burbujaPron) {
-        const burbujaDialogo = burbujaPron.closest('.burbuja-dialogo');
-        if (burbujaDialogo) {
-            const textoEnEl = burbujaDialogo.querySelector('strong');
-            if (textoEnEl) {
-                decirFraseEnIngles(textoEnEl.textContent);
-            }
-        }
-        return;
-    }
-    
-    // 3. Clic sobre la pronunciación o texto inglés en la tarjeta de Vocabulario
-    const vocabPron = e.target.closest('#vocab-pronunciacion');
-    const vocabIngles = e.target.closest('#vocab-ingles');
-    if (vocabPron || vocabIngles) {
-        const elEn = document.getElementById('vocab-ingles');
-        if (elEn) {
-            decirFraseEnIngles(elEn.textContent);
-        }
-    }
-});
-
 
 // ==========================================================================
 // --- SISTEMA DE EXAMEN GLOBAL 🏆 ---
