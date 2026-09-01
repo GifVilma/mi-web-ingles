@@ -323,7 +323,7 @@ function inicializarEjerciciosDeLeccion() {
             htmlContenido += `<div class="opciones-ej">`;
             ej.opciones.forEach(op => {
                 htmlContenido += `
-                    <button class="opcion" onclick="comprobarRespuestaTest('${appState.leccionActiva}', ${index}, '${op}', this)">
+                    <button class="opcion" onclick="comprobarRespuestaTest('${appState.leccionActiva}', ${index}, this.textContent.trim(), this)">
                         ${op}
                     </button>
                 `;
